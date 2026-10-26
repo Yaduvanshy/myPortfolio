@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vijay Pal | Senior Software Developer Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Fira Code -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            850: '#0f172a',
+                            900: '#0b0f19',
+                            950: '#05070e',
+                        },
+                        cyan: {
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                        },
+                        indigo: {
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                        },
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Customizations & Glassmorphism Effects */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-panel-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-panel-hover:hover {
+            background: rgba(30, 41, 59, 0.85);
+            border-color: rgba(34, 211, 238, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px rgba(6, 182, 212, 0.2);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 25px -5px rgba(34, 211, 238, 0.3);
+        }
+        .glow-indigo {
+            box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.3);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #34d399 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-border {
+            border-image: linear-gradient(to right, #22d3ee, #6366f1) 1;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 font-sans antialiased selection:bg-cyan-500 selection:text-slate-950 min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand & Avatar -->
+            <a href="#hero" class="flex items-center gap-3 group">
+                <div class="relative w-11 h-11 rounded-full overflow-hidden p-[2px] bg-gradient-to-tr from-cyan-400 via-indigo-500 to-emerald-400">
+                    <img src="Vijay img.jpg" alt="Vijay Pal" class="w-full h-full object-cover rounded-full bg-slate-900" onerror="this.src='https://placehold.co/100x100/1e293b/22d3ee?text=VP'">
+                </div>
+                <div>
+                    <span class="text-lg font-bold text-white tracking-tight group-hover:text-cyan-400 transition-colors">Vijay Pal</span>
+                    <span class="block text-xs text-cyan-400 font-mono font-medium">Sr. Software Developer</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#about" class="text-slate-300 hover:text-cyan-400 transition-colors">About</a>
+                <a href="#services" class="text-slate-300 hover:text-cyan-400 transition-colors">Services</a>
+                <a href="#skills" class="text-slate-300 hover:text-cyan-400 transition-colors">Skills</a>
+                <a href="#portfolio" class="text-slate-300 hover:text-cyan-400 transition-colors">Portfolio</a>
+                <a href="#experience" class="text-slate-300 hover:text-cyan-400 transition-colors">Experience</a>
+                <a href="#contact" onclick="openContactModal()" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold text-xs uppercase tracking-wider hover:opacity-90 transition-all glow-cyan flex items-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i> Contact Me
+                </a>
+            </nav>
+
+            <!-- Mobile menu button -->
+            <button id="mobileMenuBtn" class="md:hidden p-2 text-slate-400 hover:text-white focus:outline-none">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobileMenu" class="hidden md:hidden glass-panel border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-slate-200 hover:bg-slate-800">About</a>
+            <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-slate-200 hover:bg-slate-800">Services</a>
+            <a href="#skills" class="block px-3 py-2 rounded-md text-base font-medium text-slate-200 hover:bg-slate-800">Skills</a>
+            <a href="#portfolio" class="block px-3 py-2 rounded-md text-base font-medium text-slate-200 hover:bg-slate-800">Portfolio</a>
+            <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium text-slate-200 hover:bg-slate-800">Experience</a>
+            <button onclick="openContactModal()" class="w-full text-center px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold text-sm">Contact Me</button>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section id="hero" class="relative py-16 lg:py-24 overflow-hidden">
+            <!-- Background Glow Blobs -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute top-1/3 right-10 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Hero Info Left -->
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel border border-cyan-500/30 text-cyan-400 text-xs font-semibold uppercase tracking-wider">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                            Uttar Pradesh Higher Education (NIC Lucknow)
+                        </div>
+                        
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-none">
+                            Hi, I'm <span class="gradient-text">Vijay Pal</span>
+                        </h1>
+                        
+                        <p class="text-xl sm:text-2xl font-semibold text-slate-300">
+                            Senior Software Developer
+                            <span class="block text-sm font-normal text-slate-400 mt-1">Specialized in Enterprise Web Architecture, Fintech, EdTech & National Governance Portals</span>
+                        </p>
+
+                        <p class="text-slate-400 text-base leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                            Architecting secure, scalable high-throughput platforms for government operations, financial news networks, learning portals, dynamic MLM software, and automated API-driven services.
+                        </p>
+
+                        <!-- Key Metrics Grid -->
+                        <div class="grid grid-cols-3 gap-4 pt-4 border-t border-slate-800/80">
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center lg:text-left">
+                                <div class="text-2xl lg:text-3xl font-bold text-cyan-400 font-mono">8+</div>
+                                <div class="text-xs text-slate-400 mt-1 font-medium">Years Experience</div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center lg:text-left">
+                                <div class="text-2xl lg:text-3xl font-bold text-indigo-400 font-mono">10M+</div>
+                                <div class="text-xs text-slate-400 mt-1 font-medium">Users Served</div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center lg:text-left">
+                                <div class="text-2xl lg:text-3xl font-bold text-emerald-400 font-mono">100%</div>
+                                <div class="text-xs text-slate-400 mt-1 font-medium">Cyber-Compliant</div>
+                            </div>
+                        </div>
+
+                        <!-- CTA Actions -->
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+                            <a href="#portfolio" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-indigo-600 to-emerald-500 text-white font-semibold text-sm shadow-lg hover:shadow-cyan-500/25 transition-all glow-cyan flex items-center gap-2">
+                                <i class="fa-solid fa-layer-group"></i> Explore Projects
+                            </a>
+                            <button onclick="openContactModal()" class="px-6 py-3.5 rounded-xl glass-panel text-slate-200 hover:text-white hover:border-cyan-400/50 transition-all font-semibold text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-envelope text-cyan-400"></i> Get In Touch
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Hero Visual Right (C# Dev Profile & Card) -->
+                    <div class="lg:col-span-5 relative flex justify-center">
+                        <div class="relative w-full max-w-md">
+                            <!-- Glow Ring background -->
+                            <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-cyan-500 via-indigo-500 to-emerald-500 opacity-30 blur-lg"></div>
+                            
+                            <div class="relative glass-panel rounded-3xl p-6 space-y-6">
+                                <!-- Profile Photo & Status -->
+                                <div class="flex items-center gap-4">
+                                    <div class="relative w-20 h-20 rounded-2xl overflow-hidden p-1 bg-gradient-to-tr from-cyan-400 to-indigo-600 flex-shrink-0 shadow-lg">
+                                        <img src="Vijay img.jpg" alt="Vijay Pal Avatar" class="w-full h-full object-cover rounded-xl bg-slate-900" onerror="this.src='https://placehold.co/200x200/1e293b/22d3ee?text=Vijay+Pal'">
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-white">Vijay Pal</h3>
+                                        <p class="text-xs text-cyan-400 font-mono">Senior Developer @ NIC Lucknow</p>
+                                        <div class="mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px]">
+                                            <i class="fa-solid fa-building-columns text-[10px]"></i> UP Higher Education
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Code Snippet Interactive Visual -->
+                                <div class="bg-slate-950 rounded-xl p-4 border border-slate-800/90 font-mono text-xs text-slate-300 space-y-1.5 shadow-inner">
+                                    <div class="flex items-center justify-between pb-2 border-b border-slate-800 text-slate-500 text-[10px]">
+                                        <span><i class="fa-solid fa-code text-cyan-400 mr-1"></i> DeveloperProfile.cs</span>
+                                        <span class="text-emerald-400 font-semibold">● ACTIVE</span>
+                                    </div>
+                                    <p class="text-indigo-400">public class <span class="text-yellow-400">SeniorDeveloper</span> {</p>
+                                    <p class="pl-4 text-slate-400">string <span class="text-cyan-400">Name</span> = <span class="text-emerald-300">"Vijay Pal"</span>;</p>
+                                    <p class="pl-4 text-slate-400">string <span class="text-cyan-400">Role</span> = <span class="text-emerald-300">"Sr. Software Developer"</span>;</p>
+                                    <p class="pl-4 text-slate-400">string[] <span class="text-cyan-400">FocusAreas</span> = {</p>
+                                    <p class="pl-8 text-emerald-300">"ASP.NET Core", "MSSQL Architecture",</p>
+                                    <p class="pl-8 text-emerald-300">"Aadhaar eKYC", "Fintech & News Portals",</p>
+                                    <p class="pl-8 text-emerald-300">"MLM Engines", "Learning Platforms"</p>
+                                    <p class="pl-4 text-slate-400">};</p>
+                                    <p class="text-indigo-400">}</p>
+                                </div>
+
+                                <!-- Quick Badge Badges -->
+                                <div class="flex flex-wrap gap-2 pt-1">
+                                    <span class="px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 text-xs font-mono"><i class="fa-brands fa-microsoft text-cyan-400 mr-1"></i> .NET Core</span>
+                                    <span class="px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 text-xs font-mono"><i class="fa-database text-emerald-400 mr-1"></i> MSSQL</span>
+                                    <span class="px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 text-xs font-mono"><i class="fa-solid fa-fingerprint text-indigo-400 mr-1"></i> eKYC API</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Provided Section (8 Dedicated Cards) -->
+        <section id="services" class="py-20 bg-slate-900/50 border-y border-slate-800/80">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+                <div class="text-center max-w-3xl mx-auto space-y-4">
+                    <h2 class="text-xs font-mono font-bold text-cyan-400 tracking-widest uppercase">Specialized Solutions</h2>
+                    <h3 class="text-3xl sm:text-4xl font-extrabold text-white">Services Offered & Expertise</h3>
+                    <p class="text-slate-400 text-sm">Delivering robust, full-stack enterprise digital solutions ranging from secure government authentication systems to monetized commercial web apps.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Card 1 -->
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-6 space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-xl">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Website Development</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed">Full-stack web application development built with C#, ASP.NET Core, MSSQL, HTML5, CSS3, and JavaScript architectures optimized for scale.</p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-6 space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-xl">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Website Design & UI/UX</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed">Modern, intuitive, and responsive interface design ensuring sleek visual aesthetics, mobile-first layouts, and accessible design principles.</p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-6 space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl">
+                            <i class="fa-solid fa-rectangle-ad"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Google Ads & AdSense</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed">Strategic monetization integration, ad placement optimization, traffic monetization setups, and high-CPM publisher workflows.</p>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-6 space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-xl">
+                            <i class="fa-solid fa-credit-card"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Payment Gateways</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed">Seamless integration of Razorpay, PayU, and custom banking payment processing with automated webhooks and transaction logging.</p>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-6 space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-xl">
+                            <i class="fa-solid fa-network-wired"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Third-Party API Integration</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed">Connecting external RESTful APIs, JSON endpoints, market tickers, dynamic data feeds, and microservice web hooks effortlessly.</p>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-6 space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl">
+                            <i class="fa-solid fa-comment-sms"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">SMS & Communication Gateways</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed">DLT-compliant SMS gateway setups, transactional OTP dispatch engines, automated notification alerts, and email service hooks.</p>
+                    </div>
+
+                    <!-- Card 7 -->
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-6 space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-xl">
+                            <i class="fa-solid fa-fingerprint"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Aadhaar eKYC & Authentication</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed">Enterprise-grade Aadhaar eKYC verification pipelines, biometric auth protocols, and DSC (Digital Signature Certificate) verification systems.</p>
+                    </div>
+
+                    <!-- Card 8 -->
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-6 space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-xl">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Secure MIS Reports & Admin Panels</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed">Custom real-time analytical dashboards, high-volume database query optimization, role-based access control (RBAC), and exportable reports.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Skills Visualizer Section -->
+        <section id="skills" class="py-20 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+                <div class="text-center max-w-3xl mx-auto space-y-4">
+                    <h2 class="text-xs font-mono font-bold text-emerald-400 tracking-widest uppercase">Core Technical Capabilities</h2>
+                    <h3 class="text-3xl sm:text-4xl font-extrabold text-white">Skills Matrix & Tools</h3>
+                    <p class="text-slate-400 text-sm">Comprehensive mastery of modern backend frameworks, database architecture, frontend design, and integrations.</p>
+                </div>
+
+                <!-- Highlighted Focus Pills -->
+                <div class="flex flex-wrap items-center justify-center gap-3">
+                    <span class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500/20 to-cyan-500/10 border border-cyan-400/40 text-cyan-300 font-semibold text-xs flex items-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass font-bold"></i> SEO Optimization
+                    </span>
+                    <span class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500/20 to-indigo-500/10 border border-indigo-400/40 text-indigo-300 font-semibold text-xs flex items-center gap-2">
+                        <i class="fa-solid fa-palette"></i> UI/UX Design
+                    </span>
+                    <span class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500/20 to-emerald-500/10 border border-emerald-400/40 text-emerald-300 font-semibold text-xs flex items-center gap-2">
+                        <i class="fa-solid fa-robot"></i> AI Agents Integration
+                    </span>
+                    <span class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500/20 to-cyan-500/10 border border-cyan-400/40 text-cyan-300 font-semibold text-xs flex items-center gap-2">
+                        <i class="fa-solid fa-id-card"></i> Aadhaar eKYC Protocol
+                    </span>
+                    <span class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500/20 to-indigo-500/10 border border-indigo-400/40 text-indigo-300 font-semibold text-xs flex items-center gap-2">
+                        <i class="fa-solid fa-comment-sms"></i> SMS Gateway APIs
+                    </span>
+                    <span class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500/20 to-emerald-500/10 border border-emerald-400/40 text-emerald-300 font-semibold text-xs flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved"></i> Secure MIS Analytics
+                    </span>
+                </div>
+
+                <!-- Skill Categories Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Category 1: Backend & Languages -->
+                    <div class="glass-panel rounded-2xl p-6 space-y-4">
+                        <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                            <i class="fa-brands fa-microsoft text-cyan-400 text-xl"></i>
+                            <h4 class="text-base font-bold text-white">Backend & Core Languages</h4>
+                        </div>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-300">C# / .NET Framework</span>
+                                    <span class="text-cyan-400">95%</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2">
+                                    <div class="bg-cyan-400 h-2 rounded-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-300">ASP.NET Core & Web API</span>
+                                    <span class="text-cyan-400">92%</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2">
+                                    <div class="bg-cyan-400 h-2 rounded-full" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-300">MSSQL Server & Database Design</span>
+                                    <span class="text-cyan-400">90%</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2">
+                                    <div class="bg-cyan-400 h-2 rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category 2: Frontend & UI/UX -->
+                    <div class="glass-panel rounded-2xl p-6 space-y-4">
+                        <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                            <i class="fa-solid fa-code text-indigo-400 text-xl"></i>
+                            <h4 class="text-base font-bold text-white">Frontend & UI/UX Design</h4>
+                        </div>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-300">HTML5 / CSS3 / JavaScript</span>
+                                    <span class="text-indigo-400">90%</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2">
+                                    <div class="bg-indigo-400 h-2 rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-300">Bootstrap / Responsive Layouts</span>
+                                    <span class="text-indigo-400">95%</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2">
+                                    <div class="bg-indigo-400 h-2 rounded-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-300">SEO & UI/UX Optimization</span>
+                                    <span class="text-indigo-400">88%</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2">
+                                    <div class="bg-indigo-400 h-2 rounded-full" style="width: 88%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category 3: Integrations & Infrastructure -->
+                    <div class="glass-panel rounded-2xl p-6 space-y-4">
+                        <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                            <i class="fa-solid fa-server text-emerald-400 text-xl"></i>
+                            <h4 class="text-base font-bold text-white">Integrations & Server Tools</h4>
+                        </div>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-300">Razorpay & Payment Gateway APIs</span>
+                                    <span class="text-emerald-400">94%</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2">
+                                    <div class="bg-emerald-400 h-2 rounded-full" style="width: 94%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-300">Google Ads & AdSense Integration</span>
+                                    <span class="text-emerald-400">85%</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2">
+                                    <div class="bg-emerald-400 h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-300">Windows Server / IIS / FileZilla</span>
+                                    <span class="text-emerald-400">90%</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2">
+                                    <div class="bg-emerald-400 h-2 rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Projects Section -->
+        <section id="portfolio" class="py-20 bg-slate-900/50 border-t border-slate-800/80">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                
+                <!-- Section Header -->
+                <div class="text-center max-w-3xl mx-auto space-y-4">
+                    <h2 class="text-xs font-mono font-bold text-cyan-400 tracking-widest uppercase">Curated Portfolio</h2>
+                    <h3 class="text-3xl sm:text-4xl font-extrabold text-white">Featured Applications & Platforms</h3>
+                    <p class="text-slate-400 text-sm">Explore live systems built across Government sector, Fintech, Learning portals, and Enterprise digital platforms.</p>
+                </div>
+
+                <!-- Filter Category Tabs -->
+                <div class="flex flex-wrap items-center justify-center gap-2">
+                    <button onclick="filterProjects('all')" class="project-tab-btn active px-4 py-2 rounded-full text-xs font-bold transition-all bg-cyan-500 text-slate-950 shadow-md">All Projects</button>
+                    <button onclick="filterProjects('gov')" class="project-tab-btn px-4 py-2 rounded-full text-xs font-bold transition-all glass-panel text-slate-300 hover:text-white">Government & NIC</button>
+                    <button onclick="filterProjects('fintech')" class="project-tab-btn px-4 py-2 rounded-full text-xs font-bold transition-all glass-panel text-slate-300 hover:text-white">Fintech, Blogs & News</button>
+                    <button onclick="filterProjects('edtech')" class="project-tab-btn px-4 py-2 rounded-full text-xs font-bold transition-all glass-panel text-slate-300 hover:text-white">EdTech & Enterprises</button>
+                </div>
+
+                <!-- Projects Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectsGrid">
+                    
+                    <!-- 1. UP Scholarship Portal (NIC) -->
+                    <div class="project-card gov glass-panel glass-panel-hover rounded-2xl overflow-hidden flex flex-col justify-between">
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[11px] font-semibold">NIC Lucknow</span>
+                                <i class="fa-solid fa-graduation-cap text-cyan-400 text-lg"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">UP Scholarship Portal</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">High-volume state scholarship portal processing millions of student applications, Aadhaar authentication, and direct benefit transfers (DBT).</p>
+                        </div>
+                        <div class="p-6 pt-0 flex items-center justify-between text-xs border-t border-slate-800/80 mt-4">
+                            <span class="text-slate-400 font-mono">ASP.NET / MSSQL</span>
+                            <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-shield-check mr-1"></i> Live Portal</span>
+                        </div>
+                    </div>
+
+                    <!-- 2. Shadi Anudan Yojana (NIC) -->
+                    <div class="project-card gov glass-panel glass-panel-hover rounded-2xl overflow-hidden flex flex-col justify-between">
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[11px] font-semibold">NIC Lucknow</span>
+                                <i class="fa-solid fa-hands-holding-child text-indigo-400 text-lg"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Shadi Anudan Yojana & ISP</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">Integrated state welfare distribution portal supporting automated beneficiary validation, bank verification APIs, and workflow approval chains.</p>
+                        </div>
+                        <div class="p-6 pt-0 flex items-center justify-between text-xs border-t border-slate-800/80 mt-4">
+                            <span class="text-slate-400 font-mono">C# / Web APIs</span>
+                            <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-check-circle mr-1"></i> Governance</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. DARPAN Portal (NIC) -->
+                    <div class="project-card gov glass-panel glass-panel-hover rounded-2xl overflow-hidden flex flex-col justify-between">
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[11px] font-semibold">NIC Lucknow</span>
+                                <i class="fa-solid fa-chart-line text-emerald-400 text-lg"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">DARPAN MIS Dashboard</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">Executive dashboard portal for real-time monitoring of government schemes, key performance indicators (KPIs), and analytical data visualization.</p>
+                        </div>
+                        <div class="p-6 pt-0 flex items-center justify-between text-xs border-t border-slate-800/80 mt-4">
+                            <span class="text-slate-400 font-mono">MSSQL Analytics</span>
+                            <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-lock mr-1"></i> Executive Portal</span>
+                        </div>
+                    </div>
+
+                    <!-- 4. Food Recipe Portal (NEW) -->
+                    <div class="project-card edtech fintech glass-panel glass-panel-hover rounded-2xl overflow-hidden flex flex-col justify-between">
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-semibold">Lifestyle & Culinary</span>
+                                <i class="fa-solid fa-utensils text-emerald-400 text-lg"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Food Recipe & Culinary Portal</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">Interactive recipe publishing platform with ingredient proportion calculators, culinary search filters, user ratings, and Google AdSense revenue integration.</p>
+                        </div>
+                        <div class="p-6 pt-0 flex items-center justify-between text-xs border-t border-slate-800/80 mt-4">
+                            <span class="text-slate-400 font-mono">SEO / HTML5 / JS</span>
+                            <span class="text-cyan-400 font-semibold"><i class="fa-solid fa-bolt mr-1"></i> Monetized Portal</span>
+                        </div>
+                    </div>
+
+                    <!-- 5. Share Market & Financial News Portal (NEW) -->
+                    <div class="project-card fintech glass-panel glass-panel-hover rounded-2xl overflow-hidden flex flex-col justify-between">
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[11px] font-semibold">Fintech Platform</span>
+                                <i class="fa-solid fa-arrow-trend-up text-cyan-400 text-lg"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Share Market & Financial News</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">Real-time stock ticker integration, dynamic market news feeds, financial analysis updates, indices tracking, and automated stock alert pipelines.</p>
+                        </div>
+                        <div class="p-6 pt-0 flex items-center justify-between text-xs border-t border-slate-800/80 mt-4">
+                            <span class="text-slate-400 font-mono">REST API / Stock Ticker</span>
+                            <span class="text-cyan-400 font-semibold"><i class="fa-solid fa-chart-simple mr-1"></i> Live Feeds</span>
+                        </div>
+                    </div>
+
+                    <!-- 6. Tech News & Investment Blogs (NEW) -->
+                    <div class="project-card fintech edtech glass-panel glass-panel-hover rounded-2xl overflow-hidden flex flex-col justify-between">
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-[11px] font-semibold">Publishing Platform</span>
+                                <i class="fa-solid fa-newspaper text-indigo-400 text-lg"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Tech News & Investment Blogs</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">High-traffic digital publishing network covering tech trends, investment insights, crypto news, and optimized Google Ads layout architectures.</p>
+                        </div>
+                        <div class="p-6 pt-0 flex items-center justify-between text-xs border-t border-slate-800/80 mt-4">
+                            <span class="text-slate-400 font-mono">SEO / AdSense</span>
+                            <span class="text-indigo-400 font-semibold"><i class="fa-solid fa-globe mr-1"></i> Content Portal</span>
+                        </div>
+                    </div>
+
+                    <!-- 7. MLM Enterprise Software (NEW) -->
+                    <div class="project-card edtech fintech glass-panel glass-panel-hover rounded-2xl overflow-hidden flex flex-col justify-between">
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-semibold">Enterprise Architecture</span>
+                                <i class="fa-solid fa-sitemap text-emerald-400 text-lg"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">MLM Enterprise Software</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">Scalable multi-tier binary/matrix referral architecture, dynamic commission payout engines, downline tree visualizers, and wallet management systems.</p>
+                        </div>
+                        <div class="p-6 pt-0 flex items-center justify-between text-xs border-t border-slate-800/80 mt-4">
+                            <span class="text-slate-400 font-mono">C# / MSSQL / Razorpay</span>
+                            <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-cubes mr-1"></i> Dynamic Matrix</span>
+                        </div>
+                    </div>
+
+                    <!-- 8. Interactive Learning Portal (NEW) -->
+                    <div class="project-card edtech glass-panel glass-panel-hover rounded-2xl overflow-hidden flex flex-col justify-between">
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[11px] font-semibold">EdTech LMS</span>
+                                <i class="fa-solid fa-laptop-code text-cyan-400 text-lg"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Interactive Learning Portal</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">Comprehensive Learning Management System (LMS) with course video modules, quiz evaluations, progress tracking, and automated certificate generation.</p>
+                        </div>
+                        <div class="p-6 pt-0 flex items-center justify-between text-xs border-t border-slate-800/80 mt-4">
+                            <span class="text-slate-400 font-mono">ASP.NET Core / JS</span>
+                            <span class="text-cyan-400 font-semibold"><i class="fa-solid fa-certificate mr-1"></i> LMS Platform</span>
+                        </div>
+                    </div>
+
+                    <!-- 9. Walkan Token & Web3 Platform -->
+                    <div class="project-card fintech glass-panel glass-panel-hover rounded-2xl overflow-hidden flex flex-col justify-between">
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-[11px] font-semibold">Web3 & Digital Assets</span>
+                                <i class="fa-solid fa-coins text-indigo-400 text-lg"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Walkan Token Platform</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">Cryptocurrency token management portal featuring web wallet integration, dynamic transaction ledgers, and token distribution tracking.</p>
+                        </div>
+                        <div class="p-6 pt-0 flex items-center justify-between text-xs border-t border-slate-800/80 mt-4">
+                            <span class="text-slate-400 font-mono">Web3 APIs / Bootstrap</span>
+                            <span class="text-indigo-400 font-semibold"><i class="fa-solid fa-link mr-1"></i> Crypto Ecosystem</span>
+                        </div>
+                    </div>
+
+                    <!-- 10. DigiProArt & Ad Systems -->
+                    <div class="project-card edtech fintech glass-panel glass-panel-hover rounded-2xl overflow-hidden flex flex-col justify-between">
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-semibold">AdTech Platforms</span>
+                                <i class="fa-solid fa-bullhorn text-emerald-400 text-lg"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">DigiProArt & RichAdWorld</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">High-performance digital advertising platforms engineered for impression tracking, click monetization, banner rotations, and publisher payouts.</p>
+                        </div>
+                        <div class="p-6 pt-0 flex items-center justify-between text-xs border-t border-slate-800/80 mt-4">
+                            <span class="text-slate-400 font-mono">ASP.NET / Ad Engine</span>
+                            <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-eye mr-1"></i> High Traffic</span>
+                        </div>
+                    </div>
+
+                    <!-- 11. RSGIO29 & RSG PAY Systems -->
+                    <div class="project-card fintech glass-panel glass-panel-hover rounded-2xl overflow-hidden flex flex-col justify-between">
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[11px] font-semibold">Fintech Utilities</span>
+                                <i class="fa-solid fa-wallet text-cyan-400 text-lg"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">RSGIO29 & RSG PAY Suite</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">Integrated payment processing portal, digital utility bill payment gateway, and multi-service wallet solution handling thousands of transactions daily.</p>
+                        </div>
+                        <div class="p-6 pt-0 flex items-center justify-between text-xs border-t border-slate-800/80 mt-4">
+                            <span class="text-slate-400 font-mono">Razorpay / Web API</span>
+                            <span class="text-cyan-400 font-semibold"><i class="fa-solid fa-shield-halved mr-1"></i> Payment Utility</span>
+                        </div>
+                    </div>
+
+                    <!-- 12. UPPCL Raid Management System -->
+                    <div class="project-card gov glass-panel glass-panel-hover rounded-2xl overflow-hidden flex flex-col justify-between">
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-[11px] font-semibold">NIC / Power Sector</span>
+                                <i class="fa-solid fa-bolt-lightning text-amber-400 text-lg"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">UPPCL Raid Management</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">Secure operational software for Uttar Pradesh Power Corporation enforcement squads to log field raid reports, evidence documentation, and penalty tracking.</p>
+                        </div>
+                        <div class="p-6 pt-0 flex items-center justify-between text-xs border-t border-slate-800/80 mt-4">
+                            <span class="text-slate-400 font-mono">MSSQL / Security Protocol</span>
+                            <span class="text-indigo-400 font-semibold"><i class="fa-solid fa-building-flag mr-1"></i> State Utility</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Professional Timeline Experience -->
+        <section id="experience" class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+                <div class="text-center max-w-3xl mx-auto space-y-4">
+                    <h2 class="text-xs font-mono font-bold text-indigo-400 tracking-widest uppercase">Career Journey</h2>
+                    <h3 class="text-3xl sm:text-4xl font-extrabold text-white">Work Experience</h3>
+                    <p class="text-slate-400 text-sm">Demonstrated history of driving technical excellence across government departments and private enterprise sectors.</p>
+                </div>
+
+                <div class="max-w-4xl mx-auto space-y-8 relative before:absolute before:inset-0 before:left-4 md:before:left-1/2 before:-ml-px before:w-0.5 before:bg-slate-800">
+
+                    <!-- Timeline Item 1 (Current Role) -->
+                    <div class="relative flex items-center md:justify-between group">
+                        <div class="flex items-center w-full md:w-1/2 md:pr-8">
+                            <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-cyan-400 w-full space-y-3">
+                                <div class="flex items-center justify-between flex-wrap gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-semibold">05 Oct 2026 - Present</span>
+                                    <span class="text-xs text-emerald-400 font-mono font-bold">● Active Role</span>
+                                </div>
+                                <h4 class="text-xl font-bold text-white">Senior Software Developer</h4>
+                                <p class="text-xs font-semibold text-cyan-400">Uttar Pradesh Higher Education (NIC Lucknow)</p>
+                                <p class="text-slate-400 text-xs leading-relaxed">Architecting high-concurrency educational MIS applications, digital student registration pipelines, eKYC verification mechanisms, and secure government administrative portals.</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-2 border-cyan-400 flex items-center justify-center text-cyan-400 text-xs shadow-lg">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="relative flex items-center md:justify-end group">
+                        <div class="flex items-center w-full md:w-1/2 md:pl-8">
+                            <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-indigo-500 w-full space-y-3">
+                                <div class="flex items-center justify-between flex-wrap gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-semibold">2024 - 2026</span>
+                                    <span class="text-xs text-slate-400 font-mono">NIC Project Lead</span>
+                                </div>
+                                <h4 class="text-xl font-bold text-white">Software Development Engineer</h4>
+                                <p class="text-xs font-semibold text-indigo-400">Capricorn Security & Allied Services (NIC Lucknow)</p>
+                                <p class="text-slate-400 text-xs leading-relaxed">Engineered flagship portals including UP Scholarship, Shadi Anudan Yojana, and DARPAN MIS dashboards ensuring cyber compliance, database integrity, and high availability.</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-2 border-indigo-500 flex items-center justify-center text-indigo-400 text-xs shadow-lg">
+                            <i class="fa-solid fa-building-columns"></i>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3 -->
+                    <div class="relative flex items-center md:justify-between group">
+                        <div class="flex items-center w-full md:w-1/2 md:pr-8">
+                            <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-emerald-500 w-full space-y-3">
+                                <div class="flex items-center justify-between flex-wrap gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold">2019 - 2024</span>
+                                    <span class="text-xs text-slate-400 font-mono">Full Stack Engineer</span>
+                                </div>
+                                <h4 class="text-xl font-bold text-white">Full Stack Web Developer</h4>
+                                <p class="text-xs font-semibold text-emerald-400">RSG IT Solutions Pvt Ltd, Kurukshetra</p>
+                                <p class="text-slate-400 text-xs leading-relaxed">Developed custom MLM software, stock/financial news portals, AdSense monetized blogs, food recipe websites, and integrated payment gateway platforms.</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-2 border-emerald-500 flex items-center justify-center text-emerald-400 text-xs shadow-lg">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                    </div>
+                    <!-- Timeline Item 2 -->
+                    <div class="relative flex items-center md:justify-end group">
+                        <div class="flex items-center w-full md:w-1/2 md:pl-8">
+                            <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-indigo-500 w-full space-y-3">
+                                <div class="flex items-center justify-between flex-wrap gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-semibold">2017 - 2019</span>
+                                    <span class="text-xs text-slate-400 font-mono">Trainee Developer</span>
+                                </div>
+                                <h4 class="text-xl font-bold text-white">Trainee Software Engineer</h4>
+                                <p class="text-xs font-semibold text-indigo-400">Magnus IT Solutions Pvt Ltd, Lucknow</p>
+                                <p class="text-slate-400 text-xs leading-relaxed">Engineered flagship portals including UPPCL Vigilance, dashboards ensuring cyber compliance, database integrity, and high availability.</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-2 border-indigo-500 flex items-center justify-center text-indigo-400 text-xs shadow-lg">
+                            <i class="fa-solid fa-building-columns"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Contact Banner -->
+        <section class="py-16 bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 border-t border-slate-800">
+            <div class="max-w-5xl mx-auto px-4 text-center space-y-6">
+                <h3 class="text-3xl font-extrabold text-white">Have a Project or Technical Inquiry?</h3>
+                <p class="text-slate-400 text-sm max-w-2xl mx-auto">Whether you require high-scale enterprise architecture, secure API integrations, fintech portals, or government-compliant software development, let's collaborate.</p>
+                <div class="pt-2">
+                    <button onclick="openContactModal()" class="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 via-indigo-600 to-emerald-500 text-white font-bold text-sm shadow-xl hover:shadow-cyan-500/30 transition-all glow-cyan inline-flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Initiate Discussion
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800/80 py-8 text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <span class="font-bold text-slate-300">Vijay Pal</span>
+                <span>•</span>
+                <span>Senior Software Developer @ NIC Lucknow</span>
+            </div>
+            <div>
+                © 2026 Vijay Pal. All Rights Reserved. Cyber-Compliant Architecture.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Modal Dialog -->
+    <div id="contactModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden transition-opacity duration-300">
+        <div class="relative w-full max-w-lg glass-panel rounded-3xl p-6 sm:p-8 space-y-6 border border-cyan-500/30 shadow-2xl">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                    <h3 class="text-xl font-bold text-white">Contact Vijay Pal</h3>
+                    <p class="text-xs text-cyan-400">Senior Software Developer | NIC Lucknow</p>
+                </div>
+                <button onclick="closeContactModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-sm transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Contact Information Cards -->
+            <div class="space-y-4">
+                
+                <!-- Email Copy item -->
+                <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div>
+                            <span class="block text-[11px] text-slate-400 font-mono">Email Address</span>
+                            <span id="emailText" class="text-sm font-semibold text-white">vijaypalyadav.9792@gmail.com</span>
+                        </div>
+                    </div>
+                    <button onclick="copyToClipboard('emailText', 'Email copied!')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-cyan-400 font-mono transition-colors flex items-center gap-1">
+                        <i class="fa-regular fa-copy"></i> Copy
+                    </button>
+                </div>
+
+                <!-- Location item -->
+                <!--<div class="p-4 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div>
+                        <span class="block text-[11px] text-slate-400 font-mono">Office Location</span>
+                        <span class="text-sm font-semibold text-white">NIC Lucknow, Uttar Pradesh Higher Education</span>
+                    </div>
+                </div>-->
+
+                <!-- Experience Specs -->
+                <!--<div class="p-4 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <span class="block text-[11px] text-slate-400 font-mono">Government & Enterprise Services</span>
+                        <span class="text-sm font-semibold text-white">eKYC, Payment Gateways, MIS Dashboard</span>
+                    </div>
+                </div>-->
+
+            </div>
+
+            <!-- Toast Notification Box -->
+            <div id="copyToast" class="hidden p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-center text-xs font-semibold animate-bounce">
+                Notification message
+            </div>
+
+            <!-- Modal Close CTA -->
+            <div class="pt-2">
+                <button onclick="closeContactModal()" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold tracking-wider uppercase transition-colors">
+                    Close Window
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Interactivity -->
+    <script>
+        // Mobile Navigation Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        if(mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Contact Modal Logic
+        function openContactModal() {
+            const modal = document.getElementById('contactModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeContactModal() {
+            const modal = document.getElementById('contactModal');
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Clipboard Copy Helper
+        function copyToClipboard(elementId, successMessage) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            
+            // Native fallback method for iframe compatibility
+            const tempInput = document.createElement('textarea');
+            tempInput.value = textToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            // Show Toast
+            const toast = document.getElementById('copyToast');
+            if (toast) {
+                toast.innerText = successMessage;
+                toast.classList.remove('hidden');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 2500);
+            }
+        }
+
+        // Portfolio Category Filter Logic
+        function filterProjects(category) {
+            const cards = document.querySelectorAll('.project-card');
+            const buttons = document.querySelectorAll('.project-tab-btn');
+
+            // Update tab styles
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-cyan-500', 'text-slate-950', 'shadow-md');
+                btn.classList.add('glass-panel', 'text-slate-300');
+            });
+            event.target.classList.remove('glass-panel', 'text-slate-300');
+            event.target.classList.add('bg-cyan-500', 'text-slate-950', 'shadow-md');
+
+            // Filter cards display
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.classList.remove('hidden');
+                } else if (card.classList.contains(category)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
